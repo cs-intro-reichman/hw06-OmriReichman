@@ -133,13 +133,13 @@ public class Runigram {
 	 * The image is scaled (resized) to have the given width and height.
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
-		Color [][] newImage = new Color [width] [height];
+		Color [][] newImage = new Color [height][width];
 
 		for (int i = 0; i < newImage.length; i++) { 
 			for (int j = 0; j < newImage[i].length; j++) {
-				int row = (int) (i * ((double) image.length / (double) newImage.length));
-				int column = (int) (j * ((double) image[i].length / (double) newImage[i].length));
-				newImage [i][j] = newImage [row][column];
+				int row = (int) (i * ((double) image.length /  (double) height));
+				int column = (int) (j * ((double) image[i].length /  (double) width));
+				newImage [i][j] = image [row][column];
 			}
 		}
 
@@ -153,19 +153,33 @@ public class Runigram {
 	 * values in the two input color.
 	 */
 	public static Color blend(Color c1, Color c2, double alpha) {
-		//// Replace the following statement with your code
-		return null;
+		int r1 = c1.getRed();
+		int g1 = c1.getGreen();
+		int b1 = c1.getBlue();
+		int r2 = c2.getRed();
+		int g2 = c2.getGreen();
+		int b2 = c2.getBlue();
+		int r = (int) (alpha * r1 + (1 - alpha) * r2);
+		int g = (int) (alpha * g1 + (1 - alpha) * g2);
+		int b = (int) (alpha * b1 + (1 - alpha) * b2);
+		Color c = new Color (r, g, b);
+		return c;
 	}
 	
 	/**
-	 * Cosntructs and returns an image which is the blending of the two given images.
+	 * Constructs and returns an image which is the blending of the two given images.
 	 * The blended image is the linear combination of (alpha) part of the first image
 	 * and (1 - alpha) part the second image.
 	 * The two images must have the same dimensions.
 	 */
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
-		//// Replace the following statement with your code
-		return null;
+		Color [][] image = new Color [image1.length][image1[0].length];
+		for (int i = 0; i < image1.length; i++) {
+			for (int j = 0; j < image1[0].length; j ++) {
+				image[i][j] =  blend(image1[i][j], image2[i][j], alpha);
+			}
+		}
+		return image;
 	}
 
 	/**
@@ -175,7 +189,14 @@ public class Runigram {
 	 * of the source image.
 	 */
 	public static void morph(Color[][] source, Color[][] target, int n) {
-		//// Replace this comment with your code
+		if((source.length != target.length) && (source[0].length != target[0].length)) {
+			target = scaled(target, source[0].length, source.length);
+		}
+		for (int i = 0; i <= n; i++) {
+			double alpha = ((double)(n-i)/n);
+			display(blend(source, target, alpha));
+			StdDraw.pause(500);
+		}
 	}
 	
 	/** Creates a canvas for the given image. */

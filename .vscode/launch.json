@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Editor4",
+            "request": "launch",
+            "mainClass": "Editor4",
+            "projectName": "hw06-OmriReichman_1d0bbc7a"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "Test",
+            "projectName": "hw06-OmriReichman_1d0bbc7a"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
